@@ -310,7 +310,7 @@ int do_gyro_calibration(orb_advert_t *mavlink_log_pub)
 			struct gyro_report report;
 			orb_copy(ORB_ID(sensor_gyro), worker_data.gyro_sensor_sub[cur_gyro], &report);
 
-#if !defined(__PX4_QURT) && !defined(__PX4_POSIX_RPI) && !defined(__PX4_POSIX_BEBOP)
+#if !defined(__PX4_QURT) && !defined(__PX4_POSIX_EAGLE) && !defined(__PX4_POSIX_EXCELSIOR) && !defined(__PX4_POSIX_RPI) && !defined(__PX4_POSIX_BEBOP)
 
 			// For NuttX, we get the UNIQUE device ID from the sensor driver via an IOCTL
 			// and match it up with the one from the uORB subscription, because the
@@ -323,7 +323,7 @@ int do_gyro_calibration(orb_advert_t *mavlink_log_pub)
 				orb_unsubscribe(worker_data.gyro_sensor_sub[cur_gyro]);
 			}
 
-#elif defined(__PX4_QURT) || defined(__PX4_POSIX_RPI) || defined(__PX4_POSIX_BEBOP)
+#else
 
 			// For the DriverFramework drivers, we fill device ID (this is the first time) by copying one report.
 			worker_data.device_id[cur_gyro] = report.device_id;
